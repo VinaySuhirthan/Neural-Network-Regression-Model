@@ -1,4 +1,4 @@
-# Developing a Neural Network Regression Model
+<img width="1870" height="884" alt="image" src="https://github.com/user-attachments/assets/927fc638-5fb8-4b22-942e-ae930fc0a916" /># Developing a Neural Network Regression Model
 
 ## AIM
 
@@ -6,11 +6,28 @@ To develop a neural network regression model for the given dataset.
 
 ## THEORY
 
-Explain the problem statement
+The class NeuralNet inherits from nn.Module, which is the base class for all neural networks in PyTorch.
 
+In the constructor init, layers and activation functions are defined.
+
+The first layer self.n1=nn.Linear(1,10) takes one input feature and maps it to 10 neurons.
+
+The second layer self.n2=nn.Linear(10,20) processes the 12 outputs and maps them to 20 neurons.
+
+The third layer self.n3=nn.Linear(20,1) reduces the 14 features back to a single output.
+
+The activation function self.relu=nn.ReLU() introduces non-linearity, helping the network learn complex patterns.
+
+A history dictionary is initialized to store the loss values during training for performance tracking.
+
+The forward function defines how input data flows through the network layers.
+
+Input x is first passed through n1 and activated by ReLU, then through n2 with ReLU again.
+
+Finally, the processed data passes through n3 to produce the output, which is returned.
 ## Neural Network Model
 
-Include the neural network model diagram.
+<img width="770" height="766" alt="image" src="https://github.com/user-attachments/assets/4aeb2858-739e-4068-9dcb-f3b6ba00b875" />
 
 ## DESIGN STEPS
 
@@ -43,40 +60,59 @@ Plot the performance plot
 Evaluate the model with the testing data.
 
 ## PROGRAM
-### Name:
-### Register Number:
+### Name: Keerthivasan K S
+### Register Number: 212224230120
 ```python
-class NeuralNet(nn.Module):
-    def __init__(self):
+class Neuralnet(nn.Module):
+   def __init__(self):
         super().__init__()
-        #Include your code here
-
+        self.n1=nn.Linear(1,10)
+        self.n2=nn.Linear(10,20)
+        self.n3=nn.Linear(20,1)
+        self.relu=nn.ReLU()
+        self.history={'loss': []}
+   def forward(self,x):
+        x=self.relu(self.n1(x))
+        x=self.relu(self.n2(x))
+        x=self.n3(x)
+        return x
 
 
 # Initialize the Model, Loss Function, and Optimizer
+sai_brain=Neuralnet()
+criteria=nn.MSELoss()
+optimizer=optim.RMSprop(sai_brain.parameters(),lr=0.001)
 
-
-
-def train_model(ai_brain, X_train, y_train, criterion, optimizer, epochs=2000):
-    #Include your code here
+def train_model(sai_brain,x_train,y_train,criteria,optmizer,epochs=4000):
+    for i in range(epochs):
+        optimizer.zero_grad()
+        loss=criteria(sai_brain(x_train),y_train)
+        loss.backward()
+        optimizer.step()
+        
+        sai_brain.history['loss'].append(loss.item())
+        if i%200==0:
+            print(f"Epoch [{i}/epochs], loss: {loss.item():.6f}")
 
 
 
 ```
 ## Dataset Information
 
-Include screenshot of the dataset
+<img width="333" height="680" alt="image" src="https://github.com/user-attachments/assets/a001022d-4b21-4d56-947c-6e1037612a1f" />
 
 ## OUTPUT
+<img width="504" height="467" alt="image" src="https://github.com/user-attachments/assets/6d1883bb-dd64-49cb-b5ad-53180ee50769" />
 
 ### Training Loss Vs Iteration Plot
 
-Include your plot here
+<img width="823" height="582" alt="image" src="https://github.com/user-attachments/assets/d0018684-ac85-4a6a-a742-d0614eb5d6a7" />
 
 ### New Sample Data Prediction
 
-Include your sample input and output here
+<img width="968" height="148" alt="image" src="https://github.com/user-attachments/assets/7cdd7cbf-b82a-4422-8952-af87afb2ad8c" />
 
 ## RESULT
 
-Include your result here
+Successfully executed the code to develop a neural network regression model.
+
